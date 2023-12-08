@@ -1,7 +1,10 @@
 const { Client } = require("@elastic/elasticsearch");
-const { createCourses } = require("./routes/createindex");
-const { searchCourses } = require("./routes/Searchindex");
-const { removeCourses } = require("./routes/deleteIndex");
+const courseRoutes = require('./routes/courses')
+const mongoose = require('mongoose')
+
+// const { createCourses } = require("./routes/createindex");
+// const { searchCourses } = require("./routes/Searchindex");
+// const { removeCourses } = require("./routes/deleteIndex");
 const bodyParser = require('body-parser') 
 const express = require('express');
 const app = express();
@@ -64,3 +67,22 @@ app.listen(PORT,()=>{
 });
 module.exports = client;
 
+
+
+
+
+// routes
+app.use('/api/courses',courseRoutes)
+
+
+//connected to db
+mongoose.connect(process.env.MONGO_URI)
+        .then(()=>{
+
+            console.log('connected to database') 
+
+         
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
